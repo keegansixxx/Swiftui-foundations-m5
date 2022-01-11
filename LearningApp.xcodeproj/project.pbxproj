@@ -23,6 +23,7 @@
 		DB6D85BA277E847600B3D382 /* ContentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6D85B9277E847600B3D382 /* ContentDetailView.swift */; };
 		DB6D85BD277E872000B3D382 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6D85BC277E872000B3D382 /* AVKit.framework */; };
 		DB6D85BF277E88E500B3D382 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6D85BE277E88E500B3D382 /* Constants.swift */; };
+		DB8C259A278E324600A15E6D /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C2599278E324600A15E6D /* TestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		DB6D85B9277E847600B3D382 /* ContentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDetailView.swift; sourceTree = "<group>"; };
 		DB6D85BC277E872000B3D382 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		DB6D85BE277E88E500B3D382 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DB8C2599278E324600A15E6D /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				DB6D85B5277D3B2D00B3D382 /* ContentView.swift */,
 				DB6D85B7277D415900B3D382 /* ContentViewRow.swift */,
 				DB6D85B9277E847600B3D382 /* ContentDetailView.swift */,
+				DB8C2599278E324600A15E6D /* TestView.swift */,
 				DB32F0B02782B83200F9AD6A /* CodeTextView.swift */,
 				DB09B0A627852765004BE51D /* RectangleCard.swift */,
 			);
@@ -224,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB8C259A278E324600A15E6D /* TestView.swift in Sources */,
 				DB6D859B27798AA900B3D382 /* HomeView.swift in Sources */,
 				DB6D85B4277D134D00B3D382 /* HomeViewRow.swift in Sources */,
 				DB6D85B6277D3B2D00B3D382 /* ContentView.swift in Sources */,

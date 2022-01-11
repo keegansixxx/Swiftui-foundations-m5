@@ -20,13 +20,18 @@ class ContentModel: ObservableObject {
     @Published var currentLesson: Lesson?
     var currentLessonIndex = 0
     
+    //Current Question
+    @Published var currentQuestion: Question?
+    var currentQuestionIndex = 0
+    
     // Current lesson explanation
-    @Published var lessonDescription = NSAttributedString()
+    @Published var codeText = NSAttributedString()
     
     var styleData: Data?
     
     // current selected content and test
     @Published var currentContentSelected: Int?
+    @Published var currentTestSelected: Int?
     
     init() {
         
@@ -104,7 +109,7 @@ class ContentModel: ObservableObject {
         
         // set the current lesson
         currentLesson = currentModule!.content.lessons[currentLessonIndex]
-        lessonDescription = addStyling(currentLesson!.explanation)
+        codeText = addStyling(currentLesson!.explanation)
     }
     
     func nextLesson() {
@@ -117,7 +122,7 @@ class ContentModel: ObservableObject {
             
             // set the current lesson property
             currentLesson = currentModule!.content.lessons[currentLessonIndex]
-            lessonDescription = addStyling(currentLesson!.explanation)
+            codeText = addStyling(currentLesson!.explanation)
         }
         else {
             
@@ -131,6 +136,24 @@ class ContentModel: ObservableObject {
     func hasNextLesson() -> Bool {
         
         return (currentLessonIndex + 1 < currentModule!.content.lessons.count)
+    }
+    
+    func beginTest(_ moduleId:Int) {
+        
+        // set the current module
+        beginModule(moduleId)
+        
+        // set the current question
+        currentQuestionIndex = 0
+        
+        // if there are question set the current question to the first one
+        if currentModule?.test.questions.count ?? 0 > 0 {
+            
+            currentQuestion = currentModule!.test.questions[currentQuestionIndex]
+            
+            // set the question content
+            codeText = addStyling(currentQuestion!.content)
+        }
     }
     
     //MARK: - code styling
