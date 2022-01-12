@@ -93,12 +93,25 @@ struct TestView: View {
                 // Submit Button
                 Button {
                     
-                    // change submitted state to true
-                    submitted = true
-                    
-                    // check the answer and increment the counter if correct
-                    if selectedAnswerIndex == model.currentQuestion!.correctIndex {
-                        numCorrect += 1
+                    // check if answer has been submitted
+                    if submitted == true {
+                        // answer has already been submitted, move to next question
+                        model.nextQuestion()
+                        
+                        // reset properties
+                        submitted = false
+                        selectedAnswerIndex = nil
+                        
+                    }
+                    else {
+                        // submit the answer
+                        // change submitted state to true
+                        submitted = true
+                        
+                        // check the answer and increment the counter if correct
+                        if selectedAnswerIndex == model.currentQuestion!.correctIndex {
+                            numCorrect += 1
+                        }
                     }
                 } label: {
                     ZStack {
@@ -106,7 +119,7 @@ struct TestView: View {
                         RectangleCard(color: .green)
                             .frame(height: 48)
                         
-                        Text("Submit")
+                        Text(buttonText)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                     }
@@ -121,6 +134,25 @@ struct TestView: View {
             
             // test hasn't loaded yet
             ProgressView()
+        }
+    }
+    
+    var buttonText: String {
+        
+        // check if answer has been submitted
+        if submitted == true {
+            
+            if model.currentQuestionIndex + 1 == model.currentModule!.test.questions.count {
+                // this is the last question
+                return "Finish"
+            }
+            else {
+                // there is a next question
+                return "Next Question"
+            }
+        }
+        else {
+            return "Submit"
         }
     }
 }
