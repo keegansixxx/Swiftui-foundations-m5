@@ -132,8 +132,8 @@ struct TestView: View {
         }
         else {
             
-            // test hasn't loaded yet
-            ProgressView()
+            // if current question is nil, we show the result view
+            TestResultView(numCorrect: numCorrect)
         }
     }
     
