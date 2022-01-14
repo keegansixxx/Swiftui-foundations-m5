@@ -35,7 +35,11 @@ class ContentModel: ObservableObject {
     
     init() {
         
+        // parse local included json data
         getLocalData()
+        
+        // download remote json and parse data
+        getRemoteData()
         
     }
     
@@ -76,6 +80,53 @@ class ContentModel: ObservableObject {
             //log error
             print("couldnt parse style data")
         }
+    }
+    
+    func getRemoteData() {
+        
+        // string path
+        let urlString = "https://keegansixxx.github.io/learningapp-data/data2.json"
+        
+        // create url object
+        let url = URL(string: urlString)
+        
+        guard url != nil else {
+            // couldnt create url
+            return
+        }
+        
+        // create a URLRequest object
+        let request = URLRequest(url: url!)
+        
+        // get the session and kcik off the task
+        let session = URLSession.shared
+        
+        let dataTask = session.dataTask(with: request) { data, response, error in
+            
+            // check if theres an error
+            guard error == nil else {
+                // there was an error
+                return
+            }
+            
+            do {
+                // create json decoder
+                let decoder = JSONDecoder()
+                
+                // decode
+                let modules = try decoder.decode([Module].self, from: data!)
+                
+                // append parsed module into modules property
+                self.modules += modules
+                
+            }
+            catch {
+                // couldnt parse json
+            }
+        }
+        
+        // kick off data task
+        dataTask.resume()
     }
     
     //MARK: - module navigation methods
@@ -169,8 +220,8 @@ class ContentModel: ObservableObject {
             codeText = addStyling(currentQuestion!.content)
         }
         else {
-        // if not then reset the properties
-           currentQuestionIndex = 0
+            // if not then reset the properties
+            currentQuestionIndex = 0
             currentQuestion = nil
             
         }
@@ -185,16 +236,16 @@ class ContentModel: ObservableObject {
         
         // add the styling data
         if styleData != nil {
-        data.append(self.styleData!)
+            data.append(self.styleData!)
         }
         
         // add html data
         data.append(Data(htmlString.utf8))
         
         // convert to attributed string
-            if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                
-                resultString = attributedString
+        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+            
+            resultString = attributedString
         }
         
         return resultString
