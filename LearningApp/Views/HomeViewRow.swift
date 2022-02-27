@@ -14,6 +14,7 @@ struct HomeViewRow: View {
     var description: String
     var count: String
     var time: String
+    var model: ContentModel?
     
     var body: some View {
         

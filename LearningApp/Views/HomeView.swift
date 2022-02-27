@@ -28,15 +28,27 @@ struct HomeView: View {
                             
                             VStack(spacing: 20.0) {
                                 
-                                NavigationLink(destination: ContentView().onAppear(perform: {
-                                    model.beginModule(module.id)}),tag: module.id, selection: $model.currentContentSelected, label: {
-                                        
-                                        // Learning Card
-                                        HomeViewRow(image: module.content.image, title: "Learn \(module.category)", description: module.content.description, count: "\(module.content.lessons.count) Lessons", time: module.content.time)})
+                                NavigationLink(destination:
+                                                ContentView()
+                                                .onDisappear{print("testing")}
+                                                .onAppear(perform: {
+                                    model.getLessons(module: module) {
+                                        model.beginModule(module.id)
+                                    }
+                                    
+                                }),
+                                               tag: module.id.hash,
+                                               selection: $model.currentContentSelected, label: {
+                                    
+                                    // Learning Card
+                                    HomeViewRow(image: module.content.image, title: "Learn \(module.category)", description: module.content.description, count: "\(module.content.lessons.count) Lessons", time: module.content.time)})
                                 
-                                NavigationLink(destination: TestView().onAppear(perform: {
-                                    model.beginTest(module.id)
-                                }), tag: module.id, selection: $model.currentTestSelected) {
+                                NavigationLink(destination: TestView()
+                                                .onAppear(perform: {
+                                    model.getQuestions(module: module) {
+                                        model.beginTest(module.id)
+                                    }
+                                }), tag: module.id.hash, selection: $model.currentTestSelected) {
                                     
                                     //Test Card
                                     HomeViewRow(image: module.test.image, title: "\(module.category) Test", description: module.test.description, count: "\(module.test.questions.count) Questions", time: module.test.time)
@@ -50,6 +62,16 @@ struct HomeView: View {
                 }
             }
             .navigationTitle("Get Started")
+            .onChange(of: model.currentContentSelected) { changedValue in
+                if changedValue == nil {
+                    model.currentModule = nil
+                }
+            }
+            .onChange(of: model.currentTestSelected) { changedValue in
+                if changedValue == nil {
+                    model.currentModule = nil
+                }
+            }
         }
         .navigationViewStyle(.stack)
     }
